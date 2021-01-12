@@ -3,11 +3,10 @@ import csv
 
 budget_path = os.path.join('/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/PyBank/Resources/')
 
+# my laptop VSCode unable to read ******** csvpath = os.path.join(".", "Resources", "budget_data.csv") ***********
+
 budget_path_csv = os.path.join(budget_path, 'budget_data.csv')
 
-
-print ("Financial Analysis")
-print("-----------------------------------------")
 
 with open(budget_path_csv, 'r') as csvfile:
 
@@ -73,7 +72,7 @@ print(f"Average Change : ${str('%.2f' % average_revenue)}")
 print(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})")
 print(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})")
 
-output_file = os.path.join("PyBank", "bankdata.csv")
+output_file = os.path.join("PyBank", "bankdata.txt")
 
 
 with open (output_file, 'w') as csvfile:

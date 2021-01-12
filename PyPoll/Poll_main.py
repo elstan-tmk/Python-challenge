@@ -17,10 +17,9 @@ with open(electioncsv, 'r') as csvfile:
     toolet_vote = 0
 
     for vote in csvreader:
-        vote_cast += 1
 
         # vote[2] bc the candidate name is on the 3rd column
-        candidates.add (vote[2])    # <------- not working Carmen, my code is not working, can you please help checking?
+        vote_cast += 1   
 
         if(vote[2] == "Khan"):
             khan_vote += 1
@@ -39,36 +38,36 @@ with open(electioncsv, 'r') as csvfile:
     list_of_candidate = ["Khan", "Correy", "Li", "O'Tooley"]
     vote = [khan_vote, correy_vote, li_vote, toolet_vote]
             
-    vote_cast_dict = dict(list_of_candidate, vote)
-    winner = max(vote_cast_dict, winner=vote_cast_dict.get)
+    vote_cast_dict = dict(zip(list_of_candidate, vote))
+    key = max(vote_cast_dict, key = vote_cast_dict.get)
 
-    print("Election Results")
-    print("--------------------------------------")
-    print("Total Votes: " + str(vote_cast))
-    print("--------------------------------------")
-    print("Khan: " + (khan_percent) + "% " + (str(khan_vote)))              # <------- how to make them .000%??
-    print("Correy: " + (correy_percent)) + "% " + (str(correy_vote)))
-    print("Li: " + (li_percent) + "% " + (str(li_vote)))
-    print("O'Tooley: " + (toolet_percent) + " " + (str(toolet_vote)))
-    print("---------------------------------------")
-    print("Winner: " + winner)
-    print("=======================================")
+print(f"Election Results")
+print(f"--------------------------------------")
+print(f"Total Votes: {vote_cast}")
+print(f"--------------------------------------")
+print(f"Khan:  {khan_percent:.3f} % {khan_vote} ")            
+print(f"Correy: {correy_percent:.3f} % {correy_vote}")
+print(f"Li: {li_percent:.3f} % {li_vote}")
+print(f"O'Tooley: {toolet_percent:.3f} % {toolet_vote}")
+print(f"--------------------------------------")
+print(f"Winner: {key}")
+print(f"=======================================")
 
 
-    ouput_file = '/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/Export.txt'
+data_output = os.path.join("PyPoll", "poll_data.txt")
 
-    with open(ouput_file, 'w') as file:                        # <---------- do we need to create a file before file.write? or will it create a new file on its own
-    file.write("Election Results")
-    file.write("--------------------------------------")
-    file.write("Total Votes: " + str(vote_cast))
-    file.write("--------------------------------------")
-    file.write("Khan: " + (khan_percent) + "% " + (str(khan_vote)))             
-    file.write("Correy: " + (correy_percent)) + "% " + (str(correy_vote)))
-    file.write("Li: " + (li_percent) + "% " + (str(li_vote)))
-    file.write("O'Tooley: " + (toolet_percent) + " " + (str(toolet_vote)))
-    file.write("---------------------------------------")
-    file.write("Winner: " + winner)
-    file.write("=======================================")
+with open(data_output, 'w') as csvfile:                       
+    csvfile.write("Election Results\n")
+    csvfile.write(f"--------------------------------------\n")
+    csvfile.write(f"Total Votes: {vote_cast}\n")
+    csvfile.write(f"--------------------------------------\n")
+    csvfile.write(f"Khan:  {khan_percent:.3f} % {khan_vote} \n")              
+    csvfile.write(f"Correy: {correy_percent:.3f} % {correy_vote}\n")
+    csvfile.write(f"Li: {li_percent:.3f} % {li_vote}\n")
+    csvfile.write(f"O'Tooley: {toolet_percent:.3f} % {toolet_vote}\n")
+    csvfile.write(f"--------------------------------------\n")
+    csvfile.write(f"Winner: {key}\n")
+    csvfile.write(f"=======================================\n")
 
 
     
