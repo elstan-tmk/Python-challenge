@@ -1,7 +1,7 @@
 import os
 import csv
 
-budget_path = os.path.join('/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/PyBank/Resources')
+budget_path = os.path.join('/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/PyBank/Resources/')
 
 budget_path_csv = os.path.join(budget_path, 'budget_data.csv')
 
@@ -26,60 +26,61 @@ with open(budget_path_csv, 'r') as csvfile:
     min = 0
     max = 0
     
-    # PL = Profit/Loss
+    # revenue = Profit/Loss
 
-    average_pl = 0
-    total_pl = []
+    average_revenue = 0
+    total_revenue = 0
     month_count = 0
-    changes_pl = []
-    month_total =[]
-    current_pl = 0
-    end_pl = 0
+    changes_revenue = []
+    month_total = 0
+    greatest_increase = ["", 0]
+    greatest_decrease = ["", 9999999999999]
+    
+    
+    month_total += 1
+    first_row = next(csvreader)
+    total_revenue += int(first_row[1])
+    prev_revenue = int(first_row[1])
+    
 
     for row in csvreader:
-        row += 1
+        month_total += 1
+        total_revenue += int(row[1])
         
         net_total = net_total + int(row[1])
+        net_change = int(row[1]) - prev_revenue     #value of current month - value of previous
 
-        if (int (row[1]) > 0):
-            profit = profit + int(row[1])
-            row_of_profit +=1
+        prev_revenue = int(row[1])                  # Reset the value of prev_net to the row
 
-        elif (int (row[1]) < 0):
-            loss = loss + int(row[1])
-            row_of_loss +=1
+        changes_revenue += [net_change]
 
-        month_total.append(row[0])
-        total_pl.append(int(row[1]))
+        if net_change > greatest_increase[1]:
+            greatest_increase[0] = row[0]
+            greatest_increase[1] = net_change
+        
+        if net_change < greatest_decrease[1]:
+            greatest_decrease[0] = row[0]
+            greatest_decrease[1] = net_change
 
-        if (int(row[1]) > max):
-            max = int(row[1])
-            month_max = row[0]
-        elif (int(row[1]) < min):
-            min = int(row[1])
-            month_min = row[0]
-            
-        # Average    
-        for i in range(len(total_pl) - 1):
-            changes_pl.append(total_pl[i + 1] - total_pl[i])
-
-            average_pl = (sum(changes_pl)) / (len(month_total))
+       
+    average_revenue = sum(changes_revenue) / len(changes_revenue)
 
 
 
-print(f"Total Months: {str(row)} ")
+print(f"Total Months: {month_total} ")
 print(f"Total: ${str(net_total)}")
-print(f"Average Change : ${str('%.2f' % average_pl)}")
-print(f"Greatest Increase in Profits: {month_max} (${str(max)})")
-print(f"Greatest Decrease in Profits: {month_min} (${str(min)})")
+print(f"Average Change : ${str('%.2f' % average_revenue)}")
+print(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})")
+print(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})")
 
-output_file = '/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/Export.txt'
+output_file = os.path.join("PyBank", "bankdata.csv")
+
 
 with open (output_file, 'w') as csvfile:
-    file.write("Financial Analysis")
-    file.write("------------------------")
-    file.write(f"Total Months: {str(row)}")
-    file.write(f"Total: ${str(net_total)}")
-    file.write(f"Average Change: ${str('%.2f' % average_pl)}")
-    file.write(f"Greatest Increase in Profits: {month_max} (${str(max)})")
-    file.write(f"Greatest Decrease in Profits: {month_min} (${str(min)})")
+    csvfile.write("Financial Analysis\n")
+    csvfile.write("------------------------\n")
+    csvfile.write(f"Total Months: {month_total}\n")
+    csvfile.write(f"Total: ${str(net_total)}\n")
+    csvfile.write(f"Average Change: ${str('%.2f' % average_revenue)}\n")
+    csvfile.write(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})\n")
+    csvfile.write(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})\n")
