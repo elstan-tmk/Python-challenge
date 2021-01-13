@@ -2,9 +2,9 @@ import os
 
 import csv
 
-electioncsv = os.path.join('/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/PyPoll/Resources/election_data.csv')
+# electioncsv = os.path.join('/Users/mic_elstan/Desktop/UC Davis Bootcamp/Homeworks/Python-Challenge/Python-challenge/PyPoll/Resources/election_data.csv')
 
-with open(electioncsv, 'r') as csvfile:
+with open("Resources/election_data.csv", 'r') as csvfile:
 
     csvreader = csv.reader(csvfile, delimiter = ',')
 
@@ -54,7 +54,7 @@ print(f"Winner: {key}")
 print(f"=======================================")
 
 
-data_output = os.path.join("PyPoll", "poll_data.txt")
+data_output = os.path.join("poll_data.txt")
 
 with open(data_output, 'w') as csvfile:                       
     csvfile.write("Election Results\n")
